@@ -19,15 +19,15 @@ function App() {
   };
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-lacigale-bg to-white">
+    <div className="flex h-screen bg-lacigale-bg">
       {/* SIDEBAR */}
-      <aside className="w-20 lg:w-64 bg-white/80 backdrop-blur-sm border-r border-gray-100 flex flex-col flex-shrink-0 shadow-sm">
+      <aside className="w-20 lg:w-64 bg-white border-r border-gray-200 flex flex-col flex-shrink-0">
         <div className="h-16 flex items-center justify-center lg:justify-start lg:px-6 border-b border-gray-100">
-          <div className="h-10 w-10 bg-gradient-to-br from-lacigale-accent to-lacigale-gold rounded-2xl flex items-center justify-center text-white font-mono font-bold text-lg shadow-md">C</div>
-          <span className="ml-3 font-mono font-bold text-gray-900 hidden lg:block tracking-tight">La Cigale</span>
+          <div className="h-8 w-8 bg-pink-400 rounded-full flex items-center justify-center text-white font-serif font-bold">C</div>
+          <span className="ml-3 font-serif font-bold text-gray-800 hidden lg:block">La Cigale</span>
         </div>
 
-        <nav className="flex-1 py-6 space-y-1 px-2 lg:px-3">
+        <nav className="flex-1 py-6 space-y-2 px-2 lg:px-4">
           <NavItem icon={<List />} label="Liste" active={currentView === 'list'} onClick={() => setCurrentView('list')} />
           <NavItem icon={<LayoutGrid />} label="Kanban" active={currentView === 'kanban'} onClick={() => setCurrentView('kanban')} />
           <NavItem icon={<Calendar />} label="Planning" active={currentView === 'planning'} onClick={() => setCurrentView('planning')} />
@@ -37,8 +37,8 @@ function App() {
       {/* MAIN CONTENT */}
       <main className="flex-1 flex flex-col overflow-hidden">
         {/* TOP BAR */}
-        <header className="h-16 bg-white/60 backdrop-blur-md border-b border-gray-100 flex items-center justify-between px-8 flex-shrink-0">
-          <h1 className="text-2xl font-mono font-bold text-gray-900 tracking-tight">
+        <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 flex-shrink-0">
+          <h1 className="text-xl font-bold text-gray-800">
             {currentView === 'list' && 'Liste des Réservations'}
             {currentView === 'kanban' && 'Vue Kanban'}
             {currentView === 'planning' && 'Planning'}
@@ -70,10 +70,7 @@ function App() {
 }
 
 const NavItem = ({ icon, label, active = false, onClick }: { icon: React.ReactNode, label: string, active?: boolean, onClick: () => void }) => (
-  <button onClick={onClick} className={`w-full flex items-center p-3 rounded-xl transition-all duration-200 ${active
-      ? 'bg-gradient-to-r from-lacigale-accent/10 to-lacigale-accent/5 text-lacigale-accent border border-lacigale-accent/20 shadow-sm'
-      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-    }`}>
+  <button onClick={onClick} className={`w-full flex items-center p-3 rounded-lg transition-colors ${active ? 'bg-pink-100 text-pink-600' : 'text-gray-500 hover:bg-gray-50'}`}>
     {icon}
     <span className="ml-3 font-medium hidden lg:block">{label}</span>
   </button>

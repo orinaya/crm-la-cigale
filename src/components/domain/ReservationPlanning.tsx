@@ -31,14 +31,14 @@ export const ReservationPlanning = ({ refreshTrigger }: { refreshTrigger: number
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-lacigale-accent" />
+        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
         <p className="text-gray-500 mt-4">Chargement...</p>
       </div>
     );
   }
 
   if (error) {
-    return <div className="bg-red-50 p-4 rounded-xl text-red-700">{error}</div>;
+    return <div className="bg-red-50 p-4 rounded-lg text-red-700">{error}</div>;
   }
 
   // Filter reservations for selected date
@@ -57,30 +57,30 @@ export const ReservationPlanning = ({ refreshTrigger }: { refreshTrigger: number
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       {/* Date Navigation */}
-      <div className="bg-white/80 backdrop-blur-sm p-5 rounded-2xl border border-gray-100 shadow-md flex items-center justify-between">
+      <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
         <button
           onClick={() => setSelectedDate(addDays(selectedDate, -1))}
-          className="px-5 py-2.5 bg-white hover:bg-lacigale-accent/10 border border-gray-200 hover:border-lacigale-accent/30 rounded-xl font-medium transition-all duration-200"
+          className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium"
         >
           ← Jour précédent
         </button>
 
-        <h2 className="text-2xl font-mono font-bold text-gray-900">
+        <h2 className="text-xl font-bold text-gray-900">
           {format(selectedDate, 'EEEE d MMMM yyyy', { locale: fr })}
         </h2>
 
         <button
           onClick={() => setSelectedDate(addDays(selectedDate, 1))}
-          className="px-5 py-2.5 bg-white hover:bg-lacigale-accent/10 border border-gray-200 hover:border-lacigale-accent/30 rounded-xl font-medium transition-all duration-200"
+          className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium"
         >
           Jour suivant →
         </button>
       </div>
 
       {/* Planning Grid */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-md overflow-hidden">
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         {timeSlots.map(time => {
           const resasAtTime = getReservationsAtTime(time);
           const hasReservations = resasAtTime.length > 0;
@@ -88,39 +88,46 @@ export const ReservationPlanning = ({ refreshTrigger }: { refreshTrigger: number
           return (
             <div
               key={time}
-              className={`border-b border-gray-50 flex transition-colors ${hasReservations ? 'bg-gradient-to-r from-lacigale-accent/5 to-lacigale-gold/5' : 'hover:bg-gray-50/50'
-                }`}
+              className={`border-b border-gray-100 flex ${hasReservations ? 'bg-gray-50' : ''}`}
             >
               {/* Time Column */}
-              <div className="w-28 flex-shrink-0 p-4 border-r border-gray-100 bg-white/50">
-                <span className="font-mono font-bold text-gray-900">{time}</span>
+              <div className="w-24 flex-shrink-0 p-3 border-r border-gray-200 bg-gray-50">
+                <span className="font-semibold text-gray-700">{time}</span>
               </div>
 
               {/* Reservations Column */}
-              <div className="flex-1 p-4">
+              <div className="flex-1 p-3">
                 {hasReservations ? (
                   <div className="flex flex-wrap gap-2">
-                    {resasAtTime.map(resa => (
+                    {resasAtTime.map((resa, index) => {
+                      const colors = [
+                        'bg-pink-100 border-pink-300',
+                        'bg-blue-100 border-blue-300',
+                        'bg-purple-100 border-purple-300',
+                        'bg-green-100 border-green-300',
+                        'bg-yellow-100 border-yellow-300'
+                      ];
+                      return (
                       <div
                         key={resa.id}
-                        className="inline-flex items-center gap-3 px-4 py-2.5 bg-white border border-lacigale-accent/30 rounded-xl shadow-sm hover:shadow-md transition-all"
+                        className={`inline-flex items-center gap-2 px-3 py-2 ${colors[index % colors.length]} border rounded-lg`}
                       >
                         <span className="font-bold text-gray-900">
                           {resa.firstname} {resa.lastname?.toUpperCase()}
                         </span>
-                        <span className="text-sm text-gray-400">•</span>
-                        <span className="text-sm font-mono font-semibold text-lacigale-accent">
+                        <span className="text-sm text-gray-600">•</span>
+                        <span className="text-sm font-semibold text-green-700">
                           {resa.guests} pers.
                         </span>
-                        <span className="text-sm text-gray-400">•</span>
+                        <span className="text-sm text-gray-600">•</span>
                         <span className="text-xs font-mono text-gray-600">
                           {formatPhoneNumber(resa.phone)}
                         </span>
                       </div>
-                    ))}
+                    )})}
                   </div>
                 ) : (
-                  <span className="text-gray-300 text-sm font-mono">Disponible</span>
+                  <span className="text-gray-300 text-sm">Disponible</span>
                 )}
               </div>
             </div>

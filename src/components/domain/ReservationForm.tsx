@@ -38,24 +38,24 @@ export const ReservationForm = ({ onClose, onSuccess }: Props) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex justify-end">
-      <div className="w-full max-w-md bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
-        <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-lacigale-accent/5 to-lacigale-gold/5">
-          <h2 className="text-2xl font-mono font-bold text-gray-900">Nouvelle Réservation</h2>
-          <button onClick={onClose} className="p-2 hover:bg-white/80 rounded-xl transition-colors">
+    <div className="fixed inset-0 bg-black/50 z-50 flex justify-end">
+      <div className="w-full max-w-md bg-white h-full shadow-xl flex flex-col animate-in slide-in-from-right duration-300">
+        <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+          <h2 className="text-xl font-bold font-serif text-gray-900">Nouvelle Réservation</h2>
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full">
             <X className="h-6 w-6 text-gray-500" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="flex-1 p-6 overflow-y-auto space-y-6">
           {error && (
-            <div className="p-4 bg-red-50 text-red-700 text-sm rounded-xl border border-red-200">
+            <div className="p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-100">
               {error}
             </div>
           )}
 
           <div className="space-y-4">
-            <h3 className="text-xs font-mono font-semibold text-lacigale-accent uppercase tracking-wider">Client</h3>
+            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Client</h3>
             <div className="grid grid-cols-2 gap-4">
               <Input
                 label="Prénom"
@@ -80,7 +80,7 @@ export const ReservationForm = ({ onClose, onSuccess }: Props) => {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-xs font-mono font-semibold text-lacigale-accent uppercase tracking-wider">Service</h3>
+            <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">Service</h3>
             <div className="grid grid-cols-2 gap-4">
               <Input
                 label="Date"
@@ -109,10 +109,10 @@ export const ReservationForm = ({ onClose, onSuccess }: Props) => {
           </div>
         </form>
 
-        <div className="p-6 border-t border-gray-100 bg-gradient-to-r from-lacigale-bg to-white">
+        <div className="p-6 border-t border-gray-100 bg-gray-50">
           <Button
             variant="primary"
-            className="w-full h-12 text-base font-semibold"
+            className="w-full h-12 text-lg"
             onClick={handleSubmit}
             disabled={isSubmitting}
           >

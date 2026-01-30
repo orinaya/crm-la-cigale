@@ -35,14 +35,14 @@ export const ReservationKanban = ({ refreshTrigger }: { refreshTrigger: number }
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-lacigale-accent" />
+        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
         <p className="text-gray-500 mt-4">Chargement...</p>
       </div>
     );
   }
 
   if (error) {
-    return <div className="bg-red-50 p-4 rounded-xl text-red-700">{error}</div>;
+    return <div className="bg-red-50 p-4 rounded-lg text-red-700">{error}</div>;
   }
 
   // Group by time slots (Midi / Soir)
@@ -67,35 +67,41 @@ export const ReservationKanban = ({ refreshTrigger }: { refreshTrigger: number }
     }
   ];
 
+  const columnColors: Record<string, string> = {
+    morning: 'bg-pink-50 border-pink-200',
+    afternoon: 'bg-blue-50 border-blue-200',
+    evening: 'bg-purple-50 border-purple-200'
+  };
+
   return (
-    <div className="flex gap-5 overflow-x-auto pb-4">
+    <div className="flex gap-4 overflow-x-auto pb-4">
       {columns.map(column => (
-        <div key={column.id} className="flex-shrink-0 w-80 bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-100 shadow-md">
-          <div className="p-5 border-b border-gray-100 bg-gradient-to-br from-lacigale-accent/5 to-lacigale-gold/5 rounded-t-2xl">
-            <h3 className="font-mono font-bold text-lg text-gray-900">{column.title}</h3>
-            <p className="text-xs text-gray-500 mt-1 font-mono">{column.timeRange}</p>
-            <span className="inline-block mt-3 px-3 py-1 bg-lacigale-accent/10 text-lacigale-accent text-xs font-mono font-semibold rounded-lg border border-lacigale-accent/20">
+        <div key={column.id} className={`flex-shrink-0 w-80 rounded-lg border ${columnColors[column.id]}`}>
+          <div className="p-4 border-b border-gray-200 bg-white rounded-t-lg">
+            <h3 className="font-bold text-gray-900">{column.title}</h3>
+            <p className="text-xs text-gray-500">{column.timeRange}</p>
+            <span className="inline-block mt-2 px-2 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded">
               {column.reservations.length} résa(s)
             </span>
           </div>
 
           <div className="p-3 space-y-3 max-h-[calc(100vh-300px)] overflow-y-auto">
             {column.reservations.map(resa => (
-              <div key={resa.id} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-lg hover:border-lacigale-accent/30 transition-all duration-200">
-                <div className="flex justify-between items-start mb-3">
-                  <span className="text-2xl font-mono font-bold text-lacigale-accent">{resa.time}</span>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-lacigale-accent/10 text-lacigale-accent rounded-lg text-xs font-mono font-semibold">
-                    <Users className="h-3.5 w-3.5" />
+              <div key={resa.id} className="bg-white p-3 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-start mb-2">
+                  <span className="text-lg font-bold text-gray-900">{resa.time}</span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
+                    <Users className="h-3 w-3" />
                     {resa.guests}
                   </span>
                 </div>
 
-                <h4 className="font-bold text-base text-gray-900">
+                <h4 className="font-semibold text-gray-900">
                   {resa.firstname} {resa.lastname?.toUpperCase()}
                 </h4>
 
-                <div className="mt-2 flex items-center gap-1.5 text-xs text-gray-600">
-                  <Phone className="h-3.5 w-3.5 text-lacigale-accent" />
+                <div className="mt-2 flex items-center gap-1 text-xs text-gray-600">
+                  <Phone className="h-3 w-3" />
                   <span className="font-mono">{formatPhoneNumber(resa.phone)}</span>
                 </div>
               </div>

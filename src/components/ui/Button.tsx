@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export const Button = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'danger' }>(
   ({ className, variant = 'primary', ...props }, ref) => {
     const variants = {
-      primary: 'bg-lacigale-gold text-white hover:bg-yellow-600',
+      primary: 'bg-pink-500 text-white hover:bg-pink-600',
       secondary: 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50',
       danger: 'bg-red-500 text-white hover:bg-red-600'
     };
